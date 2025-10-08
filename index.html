@@ -5,12 +5,46 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Idiot CLUB</title>
     <link rel="stylesheet" href="style.css">
-    <!иконка сайта-->
+    <!--іконка сайта-->
     <link rel="icon" href="favicon.ico" type="image/x-icon">
 
 </head>
 <body>
+    <div class="teto_Sisyphus"></div>
+    <div class="infinity_loaf"><img src="loaf_up.png"/></div>
     <h1>Да!</h1>
     <p>1</p>
+    <!-- Background music: replace "music.mp3" with your file name (mp3/ogg/wav) -->
+    <!-- No controls shown; the script will try to autoplay and fall back to start on first user interaction -->
+    <audio id="bgm" src="Friendzoned - S3RL feat Mixie Moon.mp3" loop preload="auto"></audio>
+
+    <script>
+        (function(){
+            const audio = document.getElementById('bgm');
+
+            // Try to autoplay on load (may be blocked by browser policies)
+            function tryPlay() {
+                if (!audio) return;
+                audio.play().then(() => {
+                    // playback started
+                }).catch(() => {
+                    // Autoplay blocked — wait for user interaction
+                });
+            }
+
+            // If autoplay is blocked, start playback on first user gesture
+            function startOnInteraction() {
+                if (!audio) return;
+                audio.play().catch(() => {});
+                window.removeEventListener('click', startOnInteraction);
+                window.removeEventListener('keydown', startOnInteraction);
+            }
+
+            window.addEventListener('load', tryPlay);
+            window.addEventListener('click', startOnInteraction);
+            window.addEventListener('keydown', startOnInteraction);
+        })();
+    </script>
+
 </body>
 </html>

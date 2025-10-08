@@ -3,13 +3,26 @@ html, body {
 }
 body {
     font-family: Arial, sans-serif;
-    background: #f0f0f0;
+    background: #c68cdd;
     margin: 0;
     padding: 0;
 
     /* Custom cursor */
     cursor: url('loaf.png'), auto;
 }
+
+.teto_Sisyphus {
+    height: 20px;
+}
+
+.infinity_loaf {
+    background-image: url(loaf_up.png);
+    background-repeat: repeat-x;
+    -webkit-user-select: none;   /* Chrome/Safari/Opera */
+    -moz-user-select: none;      /* Firefox */
+    -ms-user-select: none;       /* IE/Edge */
+}
+
 h1 {
     color: #333;
     text-align: center;
@@ -19,3 +32,4 @@ p {
     text-align: center;
     color: #666;
 }
+

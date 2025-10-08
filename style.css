@@ -8,7 +8,7 @@ body {
     padding: 0;
 
     /* Custom cursor */
-    cursor: url('loaf.png'), auto;
+    cursor: url('assets/image/loaf.png'), auto;
 }
 
 .teto_Sisyphus {
@@ -16,7 +16,7 @@ body {
 }
 
 .infinity_loaf {
-    background-image: url(loaf_up.png);
+    background-image: url(assets/image/loaf_up.png);
     background-repeat: repeat-x;
     -webkit-user-select: none;   /* Chrome/Safari/Opera */
     -moz-user-select: none;      /* Firefox */

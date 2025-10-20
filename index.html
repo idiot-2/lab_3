@@ -11,9 +11,29 @@
 </head>
 <body>
     <div class="teto_Sisyphus"></div>
+
     <div class="infinity_loaf"><img src="assets/image/loaf_up.png"/></div>
-    <h1>НЕ НАЖИМАЙТЕ ЛКМ</h1>
-    <p>1</p>
+
+    <div class="layout">
+        <div class="volumecontroler">
+            <!-- image on the left, slider on the right -->
+            <img src="assets/image/volume loaf2.png" class="volume_loaf"/>
+            <div class="volume-ui" aria-hidden="false">
+                <div class="volume-slider" id="volumeSlider">
+                    <div class="slider-track" id="sliderTrack" tabindex="0" role="slider" aria-valuemin="0" aria-valuemax="100" aria-valuenow="0"></div>
+                    <button class="slider-thumb" id="sliderThumb" aria-label="Volume"></button>
+                </div>
+            </div>
+        </div>
+
+        <div class="main">
+            <h1>НЕ НАЖИМАЙТЕ ЛКМ</h1>
+            <p>1</p>
+        </div>
+
+        <div class="squeeze"></div>
+    </div>
+    
     <!-- Background music: replace "music.mp3" with your file name (mp3/ogg/wav) -->
     <!-- No controls shown; the script will try to autoplay and fall back to start on first user interaction -->
     <audio id="bgm" src="assets/sound/Friendzoned - S3RL feat Mixie Moon.mp3" loop preload="auto"></audio>
@@ -43,7 +63,74 @@
             window.addEventListener('load', tryPlay);
             window.addEventListener('click', startOnInteraction);
             window.addEventListener('keydown', startOnInteraction);
-        })();
+                })();
+
+                // Volume slider logic
+                (function(){
+                    const audio = document.getElementById('bgm');
+                    const track = document.getElementById('sliderTrack');
+                    const thumb = document.getElementById('sliderThumb');
+                    const slider = document.getElementById('volumeSlider');
+
+                    if (!audio || !track || !thumb || !slider) return;
+
+                    // set initial volume (0..1)
+                    audio.volume = 0.5;
+                    function setThumbByVolume(v){
+                        const rect = slider.getBoundingClientRect();
+                        // invert so top = max volume
+                        const y = (1 - v) * rect.height;
+                        thumb.style.top = y + 'px';
+                        track.setAttribute('aria-valuenow', Math.round(v*100));
+                    }
+                    setThumbByVolume(audio.volume);
+
+                    function updateVolumeFromClientY(clientY){
+                        const rect = slider.getBoundingClientRect();
+                        let y = clientY - rect.top;
+                        y = Math.max(0, Math.min(y, rect.height));
+                        // invert: y=0 -> top -> volume=1
+                        const v = 1 - (y / rect.height);
+                        audio.volume = v;
+                        setThumbByVolume(v);
+                    }
+
+                    // click on slider (vertical)
+                    slider.addEventListener('click', (e) => {
+                        updateVolumeFromClientY(e.clientY);
+                    });
+
+                    // drag thumb
+                    let dragging = false;
+                    thumb.addEventListener('pointerdown', (e) => {
+                        dragging = true;
+                        thumb.setPointerCapture(e.pointerId);
+                    });
+                    thumb.addEventListener('pointermove', (e) => {
+                        if (!dragging) return;
+                        updateVolumeFromClientY(e.clientY);
+                    });
+                    thumb.addEventListener('pointerup', (e) => {
+                        dragging = false;
+                        try { thumb.releasePointerCapture(e.pointerId); } catch(_){ }
+                    });
+
+                    // keyboard support on track (ArrowUp increases, ArrowDown decreases)
+                    track.addEventListener('keydown', (e) => {
+                        const step = 0.05;
+                        if (e.key === 'ArrowDown'){
+                            audio.volume = Math.max(0, audio.volume - step);
+                            setThumbByVolume(audio.volume);
+                        } else if (e.key === 'ArrowUp'){
+                            audio.volume = Math.min(1, audio.volume + step);
+                            setThumbByVolume(audio.volume);
+                        } else if (e.key === 'Home'){
+                            audio.volume = 0; setThumbByVolume(0);
+                        } else if (e.key === 'End'){
+                            audio.volume = 1; setThumbByVolume(1);
+                        }
+                    });
+                })();
     </script>
 
 </body>

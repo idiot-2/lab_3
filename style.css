@@ -24,6 +24,53 @@ body {
     user-select: none;           /* Standard */
 }
 
+
+.volumecontroler {
+    width: 22%;
+    border:#333 1px solid;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 8px;
+}
+
+.volume_loaf {
+    height: 300px;          /* фиксированная высота, как вы просили */
+    width: auto;            /* ширина подстраивается, сохраняем соотношение сторон */
+    max-width: 100%;        /* не выйдет за пределы контейнера */
+    object-fit: contain;    /* вписываем изображение внутрь заданной высоты */
+    display: block;
+    -webkit-user-select: none;   /* Chrome/Safari/Opera */
+    -moz-user-select: none;      /* Firefox */
+    -ms-user-select: none;       /* IE/Edge */
+    user-select: none;           /* Standard */
+}
+
+.main {
+    width: 56%;
+
+    border:#333 1px solid;
+}
+
+.squeeze {
+    width: 22%;
+
+    border:#333 1px solid;
+}
+
+/* Layout container to place three columns horizontally */
+.layout {
+    display: flex;
+    align-items: stretch;
+    min-height: 60vh; /* adjust as needed */
+}
+
+/* Universal box-sizing to avoid width issues */
+*, *::before, *::after {
+    box-sizing: border-box;
+}
+
+
 h1 {
     color: #333;
     text-align: center;
@@ -33,4 +80,15 @@ p {
     text-align: center;
     color: #666;
 }
+
+.main {
+    width: 56%;
+    border: #333 1px solid;
+}
+
+/* Minimal slider styles so thumb image is visible */
+.volume-ui { display:flex; align-items:center; }
+.volume-slider { position: relative; width: 24px; height: 200px; }
+.slider-track { position:absolute; left:50%; top:0; transform:translateX(-50%); width:6px; height:100%; }
+.slider-thumb { position:absolute; left:50%; top:100%; transform:translate(-50%,-50%); width:60px; height:74px; background: url('assets/image/tetotongue.png') no-repeat center/contain; background-size:80% 80%; border:none; cursor:pointer; }
 
